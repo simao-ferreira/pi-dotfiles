@@ -6,7 +6,7 @@ TIMESTAMP=$(date -Iseconds)
 
 function git_commands(){
     echo "Commiting and pushing"
-    cd /home/pi/minecraft/world
+    cd /home/pi/minecraft
     git add .
     git commit -m "MS: Automatic update at ${TIMESTAMP}"
     git push

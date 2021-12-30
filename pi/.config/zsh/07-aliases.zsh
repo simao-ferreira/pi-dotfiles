@@ -1,6 +1,8 @@
 # Environment
-alias reloadzsh='source $ZDOTDIR/.zshrc'
+alias reloadzsh='source $HOME/.zshenv && source $ZDOTDIR/.zshrc'
 alias dots='cd $DOTFILES'
+alias backup='git_world_backup'
+alias updt='sudo apt update && sudo apt upgrade'
 
 # Directories
 alias la='ls -lAh'

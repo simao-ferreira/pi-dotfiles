@@ -7,7 +7,7 @@ INTERVAL=600
 
 _git(){
     echo "Commiting and pushing"
-    cd ~/minecraft/world
+    cd ~/minecraft
     git add .
     wait
     git commit -m "MS: Automatic update at ${TIMESTAMP}"
