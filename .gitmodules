@@ -1,0 +1,4 @@
+[submodule "pi/.config/nvim"]
+	path = pi/.config/nvim
+	url = git@github.com:simao-ferreira/nvim.git
+	branch = main
