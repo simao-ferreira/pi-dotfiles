@@ -15,6 +15,6 @@ sudo apt install stow -y
 # Install ranger
 sudo apt install ranger -y
 
-# Install nvim 
-sudo apt install nvim -y
+# Install nvim
+sudo apt install neovim -y
 
