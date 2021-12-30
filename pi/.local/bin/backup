@@ -1,0 +1,25 @@
+#! /bin/bash
+
+# Rudimentar attempt of backuping minecraft-server using git
+
+TIMESTAMP=$(date -Iseconds)
+INTERVAL=600
+
+_git(){
+    echo "Commiting and pushing"
+    cd ~/minecraft/world
+    git add .
+    wait
+    git commit -m "MS: Automatic update at ${TIMESTAMP}"
+    wait
+    git push
+}
+
+_git
+if [ $? -eq 0 ]
+then
+    echo "Sucessful server update"
+else
+    echo "Failure saving server backups"
+fi
+

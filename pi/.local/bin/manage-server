@@ -1,0 +1,89 @@
+#! /bin/bash
+
+# Rudimentar attempt of killing the server and then shutdown
+
+TIMESTAMP=$(date -Iseconds)
+
+function git_commands(){
+    echo "Commiting and pushing"
+    cd /home/pi/minecraft/world
+    git add .
+    git commit -m "MS: Automatic update at ${TIMESTAMP}"
+    git push
+}
+
+function start_backup(){
+    echo "Starting backup now"
+
+    git_commands
+    if [ $? -eq 0 ]; then
+        echo "Backup successful"
+    else
+        echo "Backup failed!"
+    fi
+}
+
+function terminate_server() {
+    echo "Terminating server"
+
+    ~/minecraft/stop
+    if [ $? -eq 0 ]; then
+            echo "Successful server termination, shuting down"
+            sudo shutdown now
+    else
+            echo "Failure while terminating, exiting"
+    fi
+}
+
+function server_check(){
+    echo "Checking server status"
+
+    screen -ls | grep Pinecraft
+    if [ $? -eq 0 ]; then
+        echo "Server is running"
+    else
+        echo "Failed to get server, probably is not running"
+    fi
+}
+
+function restart_server(){
+    echo "Restarting OS and server"
+
+    sudo minecraft/reboot
+}
+
+
+case "${1}" in
+    -b)
+        server_check && start_backup;;
+    --backup)
+        server_check && start_backup;;
+    -r)
+       restart_server;;
+    --restart)
+       restart_server;;
+    -s)
+       server_check;;
+    --status)
+       server_check;;
+    -t)
+       start_backup && terminate_server;;
+    --terminate)
+       start_backup && terminate_server;;
+    --help)
+        echo "Usage: manage-server [OPTION]"
+        echo "Example: manage-server -b"
+        echo "Option selection and interpretation:"
+        echo "  -b, --backup        verify server is on and start backup of the game"
+        echo "  -r, --restart       restart machine and server"
+        echo "  -s, --status        start manual game backup"
+        echo "  -t, --terminate     terminate game server"
+        echo ""
+        ;;
+    *)
+        echo "Unknown command."
+        echo "Usage: manage-server [OPTION] [ARGUMENT]"
+        echo "Try 'manage-server --help' for more information."
+        echo ""
+        ;;
+esac
